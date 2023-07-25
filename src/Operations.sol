@@ -27,7 +27,8 @@ contract Operations {
             }
             for {
                 let i := 2
-            } lt(i, half) { // loop until i < half
+            } lt(i, half) {
+                // loop until i < half
                 // increment i by 1
                 i := add(i, 1)
             } {
@@ -73,6 +74,125 @@ contract Operations {
                 if gt(j, max) {
                     max := j
                 }
+            }
+        }
+    }
+
+    // >>>>> HERE ARE SOME BASIC OPERATIONS IN YUL (in the case you're wondering how to perform them) <<<<<
+    
+    /**
+     * @dev Determines whether the value 2 is truthy.
+     * @return result if 2 is truthy, 0 otherwise.
+     */
+    function isTruthy() external pure returns (uint256 result) {
+        result = 2;
+        assembly {
+            if 2 {
+                result := 1
+            }
+        }
+
+        return result; // returns 1
+    }
+
+    /**
+     * @dev Determines whether the value 0 is falsy.
+     * @return result if 0 is falsy, 1 otherwise.
+     */
+    function isFalsy() external pure returns (uint256 result) {
+        result = 1;
+        assembly {
+            if 0 {
+                result := 2
+            }
+        }
+
+        return result; // returns 1
+    }
+
+    /**
+     * @dev Performs a logical negation on the value 0.
+     * @return result if the negation of 0 is true, 1 otherwise.
+     */
+    function negation() external pure returns (uint256 result) {
+        result = 1;
+        assembly {
+            if iszero(0) {
+                result := 2
+            }
+        }
+
+        return result; // returns 2
+    }
+
+    /**
+     * @dev Performs a logical negation on the value 0 using the `not()` function.
+     * @return result if the negation of 0 is true, 1 otherwise.
+     */
+    function unsafe1NegationPart1() external pure returns (uint256 result) {
+        result = 1;
+        assembly {
+            if not(0) {
+                result := 2
+            }
+        }
+
+        return result; // returns 2
+    }
+
+    /**
+     * @dev Performs a bitwise NOT operation on the value 2.
+     * @return result The bitwise NOT of 2.
+     */
+    function bitFlip() external pure returns (bytes32 result) {
+        assembly {
+            result := not(2)
+        }
+    }
+
+    /**
+     * @dev Performs a logical negation on the value 2 using the `not()` function.
+     * @return result if the negation of 2 is true, 1 otherwise.
+     */
+    function unsafe2NegationPart() external pure returns (uint256 result) {
+        result = 1;
+        assembly {
+            if not(2) {
+                result := 2
+            }
+        }
+
+        return result; // returns 2
+    }
+
+    /**
+     * @dev Performs a logical negation on the value 2 using the `iszero()` function.
+     * @return result if the negation of 2 is true, 1 otherwise.
+     */
+    function safeNegation() external pure returns (uint256 result) {
+        result = 1;
+        assembly {
+            if iszero(2) {
+                result := 2
+            }
+        }
+
+        return result; // returns 1
+    }
+
+    /**
+     * @dev Returns the maximum of two uint256 values.
+     * @param x The first value.
+     * @param y The second value.
+     * @return maximum The maximum of x and y.
+     */
+    function max(uint256 x, uint256 y) external pure returns (uint256 maximum) {
+        assembly {
+            if lt(x, y) {
+                maximum := y
+            }
+            if iszero(lt(x, y)) {
+                maximum := x
             }
         }
     }
