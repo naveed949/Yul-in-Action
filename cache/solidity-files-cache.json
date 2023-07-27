@@ -913,6 +913,62 @@
         }
       }
     },
+    "script/Storage.s.sol": {
+      "lastModificationDate": 1690457279095,
+      "contentHash": "ce7b206c2ad7bee72e1d062c53e03319",
+      "sourceName": "script/Storage.s.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/forge-std/src/safeconsole.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "StorageScript": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.s.sol/StorageScript.json"
+        }
+      }
+    },
     "script/Types.s.sol": {
       "lastModificationDate": 1690285273682,
       "contentHash": "d2c6571667d3e08ce7d34e513fa78039",
@@ -970,8 +1026,8 @@
       }
     },
     "src/Operations.sol": {
-      "lastModificationDate": 1690305472539,
-      "contentHash": "4dd38aa3b1400b011b4420bba6d0d46e",
+      "lastModificationDate": 1690457238883,
+      "contentHash": "a70a928325bb81c1e7b2528123fc5d62",
       "sourceName": "src/Operations.sol",
       "solcConfig": {
         "settings": {
@@ -1007,6 +1063,47 @@
       "artifacts": {
         "Operations": {
           "0.8.17+commit.8df45f5f.Linux.gcc": "Operations.sol/Operations.json"
+        }
+      }
+    },
+    "src/Storage.sol": {
+      "lastModificationDate": 1690462079815,
+      "contentHash": "b9c14ccf50d7006be6599d1f36ba6b67",
+      "sourceName": "src/Storage.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.17",
+      "artifacts": {
+        "Storage": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.sol/Storage.json"
         }
       }
     },
@@ -1052,7 +1149,7 @@
       }
     },
     "test/Operations.t.sol": {
-      "lastModificationDate": 1690304842499,
+      "lastModificationDate": 1690455465607,
       "contentHash": "9d23a3977c9ac1de9f27f35672cb35b5",
       "sourceName": "test/Operations.t.sol",
       "solcConfig": {
@@ -1112,9 +1209,70 @@
         }
       }
     },
+    "test/Storage.t.sol": {
+      "lastModificationDate": 1690461939883,
+      "contentHash": "a40bea4d37f9726cbf0bcf95eb756021",
+      "sourceName": "test/Storage.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/StdAssertions.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdError.sol",
+        "lib/forge-std/src/StdInvariant.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/forge-std/src/safeconsole.sol",
+        "src/Storage.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "StorageTest": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.t.sol/StorageTest.json"
+        }
+      }
+    },
     "test/Types.t.sol": {
-      "lastModificationDate": 1690288407490,
-      "contentHash": "a26d86186b0857c07f8d6d1025522436",
+      "lastModificationDate": 1690457946435,
+      "contentHash": "cfaac24876a36e6e44ad23e578071ef5",
       "sourceName": "test/Types.t.sol",
       "solcConfig": {
         "settings": {

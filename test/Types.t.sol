@@ -24,7 +24,7 @@ contract TypesTest is Test {
         bytes32 myString = "lorem ipsum dolor set amet...";
         string memory expected = string(abi.encode(myString));
         string memory actual = types.demoString();
-
+        console.log(actual);
         assertEq(actual, expected);
     }
 

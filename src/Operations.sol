@@ -151,7 +151,7 @@ contract Operations {
     }
 
     /**
-     * @dev Performs a logical negation on the value 2 using the `not()` function.
+     * @dev Performs a logical negation on the value 2 using the `not()` function. [UNSAFE - use `iszero()` instead]
      * @return result if the negation of 2 is true, 1 otherwise.
      */
     function unsafe2NegationPart() external pure returns (uint256 result) {
