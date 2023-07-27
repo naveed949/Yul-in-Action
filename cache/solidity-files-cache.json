@@ -857,10 +857,10 @@
         }
       }
     },
-    "script/Operations.s.sol": {
-      "lastModificationDate": 1690290408074,
-      "contentHash": "3dcf7117718f7a609a96b1c156389ef8",
-      "sourceName": "script/Operations.s.sol",
+    "script/BasicOps.s.sol": {
+      "lastModificationDate": 1690468415133,
+      "contentHash": "f9917d63d1e52940551d323f7a6a7bf0",
+      "sourceName": "script/BasicOps.s.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -908,15 +908,15 @@
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "OperationsScript": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Operations.s.sol/OperationsScript.json"
+        "BasicOpsScript": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BasicOps.s.sol/BasicOpsScript.json"
         }
       }
     },
-    "script/Storage.s.sol": {
-      "lastModificationDate": 1690457279095,
-      "contentHash": "ce7b206c2ad7bee72e1d062c53e03319",
-      "sourceName": "script/Storage.s.sol",
+    "script/BitwiseOps.s.sol": {
+      "lastModificationDate": 1690468375649,
+      "contentHash": "966777da9466fb00ad2cf036816552e1",
+      "sourceName": "script/BitwiseOps.s.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -964,8 +964,8 @@
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "StorageScript": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.s.sol/StorageScript.json"
+        "BitwiseOpsScript": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BitwiseOps.s.sol/BitwiseOpsScript.json"
         }
       }
     },
@@ -1025,10 +1025,10 @@
         }
       }
     },
-    "src/Operations.sol": {
-      "lastModificationDate": 1690457238883,
-      "contentHash": "a70a928325bb81c1e7b2528123fc5d62",
-      "sourceName": "src/Operations.sol",
+    "src/BasicOps.sol": {
+      "lastModificationDate": 1690468577405,
+      "contentHash": "e8834617bd5aae1b0ef47c4b60e6588e",
+      "sourceName": "src/BasicOps.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1061,15 +1061,15 @@
       "imports": [],
       "versionRequirement": "=0.8.17",
       "artifacts": {
-        "Operations": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Operations.sol/Operations.json"
+        "BasicOps": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BasicOps.sol/BasicOps.json"
         }
       }
     },
-    "src/Storage.sol": {
-      "lastModificationDate": 1690462079815,
-      "contentHash": "b9c14ccf50d7006be6599d1f36ba6b67",
-      "sourceName": "src/Storage.sol",
+    "src/BitwiseOps.sol": {
+      "lastModificationDate": 1690468269005,
+      "contentHash": "7c86811dde52752f6dabc7ee93fd9e81",
+      "sourceName": "src/BitwiseOps.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1102,8 +1102,8 @@
       "imports": [],
       "versionRequirement": "=0.8.17",
       "artifacts": {
-        "Storage": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.sol/Storage.json"
+        "BitwiseOps": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BitwiseOps.sol/BitwiseOps.json"
         }
       }
     },
@@ -1148,10 +1148,10 @@
         }
       }
     },
-    "test/Operations.t.sol": {
-      "lastModificationDate": 1690455465607,
-      "contentHash": "9d23a3977c9ac1de9f27f35672cb35b5",
-      "sourceName": "test/Operations.t.sol",
+    "test/BasicOps.t.sol": {
+      "lastModificationDate": 1690468322869,
+      "contentHash": "439e19a26fa4536cc5c3d86a4ca764f2",
+      "sourceName": "test/BasicOps.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1200,18 +1200,18 @@
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
         "lib/forge-std/src/safeconsole.sol",
-        "src/Operations.sol"
+        "src/BasicOps.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "OperationsTest": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Operations.t.sol/OperationsTest.json"
+        "BasicOpsTest": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BasicOps.t.sol/BasicOpsTest.json"
         }
       }
     },
     "test/Storage.t.sol": {
-      "lastModificationDate": 1690461939883,
-      "contentHash": "a40bea4d37f9726cbf0bcf95eb756021",
+      "lastModificationDate": 1690468258721,
+      "contentHash": "99c1c6a9814cf9ffb55d5351994391f0",
       "sourceName": "test/Storage.t.sol",
       "solcConfig": {
         "settings": {
@@ -1261,12 +1261,12 @@
         "lib/forge-std/src/console2.sol",
         "lib/forge-std/src/interfaces/IMulticall3.sol",
         "lib/forge-std/src/safeconsole.sol",
-        "src/Storage.sol"
+        "src/BitwiseOps.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "StorageTest": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.t.sol/StorageTest.json"
+        "BitwiseOpsTest": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.t.sol/BitwiseOpsTest.json"
         }
       }
     },

@@ -2,10 +2,10 @@
 pragma solidity 0.8.17;
 
 /**
- * @title Operations
+ * @title BasicOps
  * @dev This contract contains functions for performing various mathematical operations in Yul.
  */
-contract Operations {
+contract BasicOps {
     /**
      * @dev Determines whether a given number is prime.
      * @param num The number to check.
@@ -45,7 +45,7 @@ contract Operations {
     /**
      * @dev Returns the maximum value in an array of uint256 values.
      * @param nums The array of values to search.
-     * @return max The maximum value in the array.
+     * @return _max The maximum value in the array.
      * @notice array slot is 0
      * array length is stored in first 32 bytes
      * array elements start at 32 bytes
@@ -54,10 +54,10 @@ contract Operations {
      * nums[2] can loaded by mload(add(nums, 0x60))
      * and so on...
      */
-    function maxNum(uint256[] memory nums) public pure returns (uint256 max) {
+    function maxNum(uint256[] memory nums) public pure returns (uint256 _max) {
         assembly {
             // loading nums[0] into max - skipped first 32 bytes (length of array)
-            max := mload(add(nums, 0x20))
+            _max := mload(add(nums, 0x20))
             // index of 2nd element is 2 * 32 = 0x40
             let i := 2
             let j
@@ -71,8 +71,8 @@ contract Operations {
                 // load nums[i] into j
                 j := mload(add(nums, mul(i, 0x20)))
                 // if j > max, set max to j
-                if gt(j, max) {
-                    max := j
+                if gt(j, _max) {
+                    _max := j
                 }
             }
         }
@@ -184,15 +184,15 @@ contract Operations {
      * @dev Returns the maximum of two uint256 values.
      * @param x The first value.
      * @param y The second value.
-     * @return maximum The maximum of x and y.
+     * @return result The maximum of x and y.
      */
-    function max(uint256 x, uint256 y) external pure returns (uint256 maximum) {
+    function max(uint256 x, uint256 y) external pure returns (uint256 result) {
         assembly {
             if lt(x, y) {
-                maximum := y
+                result := y
             }
             if iszero(lt(x, y)) {
-                maximum := x
+                result := x
             }
         }
     }

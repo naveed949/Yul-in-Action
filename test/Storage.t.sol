@@ -2,14 +2,14 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/Storage.sol";
+import "../src/BitwiseOps.sol";
 
-contract StorageTest is Test {
+contract BitwiseOpsTest is Test {
 
-      Storage public store;
+      BitwiseOps public store;
 
     function setUp() public {
-        store = new Storage();
+        store = new BitwiseOps();
     }
 
     function testSetNum() public {

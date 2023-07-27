@@ -3,13 +3,13 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/Operations.sol";
+import "../src/BasicOps.sol";
 
-contract OperationsTest is Test {
-    Operations public ops;
+contract BasicOpsTest is Test {
+    BasicOps public ops;
 
     function setUp() public {
-        ops = new Operations();
+        ops = new BasicOps();
     }
 
     function testIsPrime(uint16 num ) public  {

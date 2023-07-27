@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.17;
 
-contract Storage {
+contract BitwiseOps {
     uint256 public num;
     // variables packed into a single slot. slot == 256 bits
     uint64 public a;
@@ -61,7 +61,9 @@ contract Storage {
         assembly {
             let slot := sload(a.slot) // slot 1
             // fetching last 64 bits
-            _a := and(slot, 0x000000000000000000000000000000000000000000000000ffffffffffffffff)
+            // _a := and(slot, 0x000000000000000000000000000000000000000000000000ffffffffffffffff)
+            // option 2
+            _a := shr(192, shl(192,slot))
         }
     }
 
@@ -69,7 +71,9 @@ contract Storage {
         assembly {
             let slot := sload(a.slot) // slot 1
             // fetching middle 128 bits
-            _b := shr(64, and(slot, 0x0000000000000000ffffffffffffffffffffffffffffffff0000000000000000))
+            // _b := shr(64, and(slot, 0x0000000000000000ffffffffffffffffffffffffffffffff0000000000000000))
+            // option 2
+            _b := shr(128, shl(64,slot))
 
         }
     }
@@ -78,7 +82,9 @@ contract Storage {
         assembly {
             let slot := sload(a.slot) // slot 1
             // fetching first 64 bits
-            _c := shr(192, and(slot, 0xffffffffffffffff000000000000000000000000000000000000000000000000))
+            // _c := shr(192, and(slot, 0xffffffffffffffff000000000000000000000000000000000000000000000000))
+            // optimized version
+            _c := shr(192, slot)
         }
     }
 }
