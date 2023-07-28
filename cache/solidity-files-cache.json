@@ -969,6 +969,62 @@
         }
       }
     },
+    "script/StorageOps.s.sol": {
+      "lastModificationDate": 1690551487052,
+      "contentHash": "e8ec1d1a5ed928b5531e4197e09eb64d",
+      "sourceName": "script/StorageOps.s.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/forge-std/src/safeconsole.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "StorageOpsScript": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "StorageOps.s.sol/StorageOpsScript.json"
+        }
+      }
+    },
     "script/Types.s.sol": {
       "lastModificationDate": 1690285273682,
       "contentHash": "d2c6571667d3e08ce7d34e513fa78039",
@@ -1107,6 +1163,47 @@
         }
       }
     },
+    "src/StorageOps.sol": {
+      "lastModificationDate": 1690551824032,
+      "contentHash": "c3678eab131e626b369090f28369d5c0",
+      "sourceName": "src/StorageOps.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.17",
+      "artifacts": {
+        "StorageOps": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "StorageOps.sol/StorageOps.json"
+        }
+      }
+    },
     "src/Types.sol": {
       "lastModificationDate": 1690285583278,
       "contentHash": "67e292bec0634547eb8e485fde07ad55",
@@ -1209,10 +1306,10 @@
         }
       }
     },
-    "test/Storage.t.sol": {
+    "test/BitwiseOps.t.sol": {
       "lastModificationDate": 1690468258721,
       "contentHash": "99c1c6a9814cf9ffb55d5351994391f0",
-      "sourceName": "test/Storage.t.sol",
+      "sourceName": "test/BitwiseOps.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -1266,7 +1363,68 @@
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "BitwiseOpsTest": {
-          "0.8.17+commit.8df45f5f.Linux.gcc": "Storage.t.sol/BitwiseOpsTest.json"
+          "0.8.17+commit.8df45f5f.Linux.gcc": "BitwiseOps.t.sol/BitwiseOpsTest.json"
+        }
+      }
+    },
+    "test/StorageOps.t.sol": {
+      "lastModificationDate": 1690551798736,
+      "contentHash": "e33590b686242c8814fe4fd6a5ee2c72",
+      "sourceName": "test/StorageOps.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Base.sol",
+        "lib/forge-std/src/StdAssertions.sol",
+        "lib/forge-std/src/StdChains.sol",
+        "lib/forge-std/src/StdCheats.sol",
+        "lib/forge-std/src/StdError.sol",
+        "lib/forge-std/src/StdInvariant.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/StdMath.sol",
+        "lib/forge-std/src/StdStorage.sol",
+        "lib/forge-std/src/StdStyle.sol",
+        "lib/forge-std/src/StdUtils.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/forge-std/src/interfaces/IMulticall3.sol",
+        "lib/forge-std/src/safeconsole.sol",
+        "src/StorageOps.sol"
+      ],
+      "versionRequirement": "=0.8.17",
+      "artifacts": {
+        "StorageOpsTest": {
+          "0.8.17+commit.8df45f5f.Linux.gcc": "StorageOps.t.sol/StorageOpsTest.json"
         }
       }
     },
