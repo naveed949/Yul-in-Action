@@ -20,9 +20,7 @@ contract StorageOps {
         fixedArray[0] = 1;
         fixedArray[1] = 2;
         fixedArray[2] = 3;
-        // dynamicArray.push(1);
-        // dynamicArray.push(2);
-        // dynamicArray.push(3);
+        dynamicArray = [10, 20, 30];
         normalMap[address(1)] = 1;
         complexMap[address(2)][1] = 2;
         complexMap[address(3)][2] = 3;
@@ -55,16 +53,20 @@ contract StorageOps {
         uint256 slot;
         assembly {
             // load dynamicArray slot into memory
-            slot := sload(dynamicArray.slot)
+            slot := dynamicArray.slot
         }
-        // bytes32 location = keccak256(abi.encode(slot));
+        bytes32 location = keccak256(abi.encode(slot));
+        uint256 length;
 
         assembly {
             
             // load length of _dynamicArray into memory
-            let length := mload(_dynamicArray)
-            // store length of _dynamicArray in dynamicArray's location (hash of slot)
-            sstore(slot, length)
+             length := mload(_dynamicArray)
+        }
+        emit Info("memory length", length);
+        assembly {
+            // store length value of _dynamicArray in dynamicArray's slot
+            // sstore(slot, length)
             // loop through _dynamicArray
             for {
                 let i := 0
@@ -73,28 +75,45 @@ contract StorageOps {
                 i := add(i, 1)
             } {
                 // store _dynamicArray[i] in dynamicArray[i]
-                sstore(add(add(slot, 0x20), mul(i, 0x20)), mload(add(_dynamicArray, add(0x20, mul(i, 0x20)))))
+                sstore(
+                    add(location, mul(i, 0x20)),
+                     mload(add(_dynamicArray, add(0x20, mul(i, 0x20))))
+                     )
             }
         }
     }
-
-    function readDynamicArray(uint256 index) public view returns (bytes32 value) {
-        uint256 slot;
+    
+    function read(uint256[] memory values, uint256 index) public pure returns (uint256 value) {
         assembly {
-            // load dynamicArray slot into memory
-            slot := sload(dynamicArray.slot)
-        }
-        // hash of slot and index is the location of dynamicArray[index]
-        bytes32 indexLocation = keccak256(abi.encode(slot, index));
-
-        assembly {
-            // load length of dynamicArray into memory
-            //  value := sload(indexLocation)
-            
-            // load dynamicArray[index] into memory
-            // value := sload(add(add(slot, 0x20), mul(index, 0x20)))
-            value := sload(dynamicArray.slot)
+            value := mload(add(values, add(0x20, mul(index, 0x20))))
         }
     }
 
+    function readDynamicArray(uint256 index) public view returns (uint256 value) {
+        uint256 slot;
+        assembly {
+            // set dynamicArray slot into memory variable
+            slot := dynamicArray.slot
+        }
+        // hash of slot is the location of storage slot where dynamicArray values stored in sequesnce as per their indexes
+        bytes32 location = keccak256(abi.encode(slot));
+
+        assembly {
+            // load value of dynamicArray[index] into memory
+             value := sload(add(location, index))
+        }
+    }
+    event Info(string message, uint256 value);
+
 }
+
+// Path: src/StorageOps.sol
+/**
+ * @dev This contract is used for testing the storage operations in Yul.
+ * @note
+ * - Length of fixed or dynamic array is stored in the slot of the array. i.e. `array.slot`
+ * - The values of fixed array are stored at `add(array.slot, index)`
+ * - The values of dynamic array are stored at different location. (due to dynamic nature of array and to avoid possibilited of overwriting the values of other storage variables came after this dynamic array)
+ *  - The location of dynamic array's values storage is calculated by `keccak256(abi.encode(array.slot))`
+ * - The values of dynamic array are stored at `add(location, index) = value`
+ */
