@@ -24,14 +24,16 @@ contract StorageOpsTest  is Test {
         }
     
         function testWriteDynamicArray() public {
-            uint256[] memory dynamicArray = new uint256[](3);
+            uint256[] memory dynamicArray = new uint256[](4);
             dynamicArray[0] = 11;
             dynamicArray[1] = 22;
             dynamicArray[2] = 33;
+            dynamicArray[3] = 44;
             store.writeDynamicArray(dynamicArray);
         
             assertEq(store.readDynamicArray(0), 11);
             assertEq(store.readDynamicArray(1), 22);
             assertEq(store.readDynamicArray(2), 33);
+            assertEq(store.readDynamicArray(3), 44);
         }
 }
