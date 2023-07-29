@@ -64,4 +64,13 @@ contract StorageOpsTest  is Test {
             assertEq(data.b, 2);
             assertEq(data.c, 3);
         }
+
+        function testWriteStructMap() public {
+            StorageOps.Data memory data = StorageOps.Data(11, 22, 33);
+            store.writeStructMap(2, data);
+            StorageOps.Data memory data2 = store.readStructMap(2);
+            assertEq(data2.a, 11);
+            assertEq(data2.b, 22);
+            assertEq(data2.c, 33);
+        }
 }

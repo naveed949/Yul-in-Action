@@ -224,7 +224,7 @@ contract StorageOps {
      */
     function readStructMap(
         uint256 key
-    ) public returns (Data memory value) {
+    ) public view returns (Data memory value) {
         uint256 slot;
         assembly {
             // fetch the slot of structMap
@@ -245,18 +245,38 @@ contract StorageOps {
         }
         value = Data(a, b, c);
     }
+
+    /**
+     * @dev Function to write the value of structMap at a given key to structMap in storage.
+     * @param key The key of the value to write to structMap.
+     * @param data The Data struct to write to structMap.
+     */
+    function writeStructMap(
+        uint256 key,
+        Data memory data
+    ) public {
+        uint256 slot;
+        assembly {
+            // fetch the slot of structMap
+            slot := structMap.slot
+        }
+        // hash the slot and key to get the location of structMap[key] in storage
+        bytes32 location = keccak256(abi.encode(key, slot));
+        assembly {
+            // store value of structMap[key].a
+            sstore(location, mload(data))
+            /**
+             * @note
+             * in storage data is stored in key-value pair, so we need to add 1 to location to store value of structMap[key].b
+             * memory is heap of bytes so to access next data we need to provide the offset of data (not location - i.e: key)
+             */
+            // store value of structMap[key].b
+            sstore(add(location, 1), mload(add(data,0x20))) 
+
+            // store value of structMap[key].c
+            sstore(add(location, 2), mload(add(data,0x40)))
+        }
+    }
 }
 
 // Path: src/StorageOps.sol
-/**
- * @dev This contract is used for testing the storage operations in Yul.
- * @note
- * - Length of fixed or dynamic array is stored in the slot of the array. i.e. `array.slot`
- * - The values of fixed array are stored at `add(array.slot, index)`
- * - The values of dynamic array are stored at different location. (due to dynamic nature of array and to avoid possibilited of overwriting the values of other storage variables came after this dynamic array)
- *  - The location of dynamic array's values storage is calculated by `keccak256(abi.encode(array.slot))`
- * - The values of dynamic array are stored at `add(location, index) = value`
- * - The values of mapping are stored at `keccak256(abi.encode(key, slot)) = value`
- * - The values of nested mapping are stored at hash of hash i.e: `keccak256(abi.encode(innerKey, keccak256(abi.encode(key, slot)))) = value`
- * - The values of struct are stored at `add(location, index) = value`
- */
