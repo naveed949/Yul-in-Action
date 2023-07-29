@@ -56,4 +56,12 @@ contract StorageOpsTest  is Test {
             store.writeNestedMap(address(3), 2, 22);
             assertEq(store.readNestedMap(address(3), 2), 22);
         }
+
+        function testReadStructMap() public {
+            
+            StorageOps.Data memory data  = store.readStructMap(1);
+            assertEq(data.a, 1);
+            assertEq(data.b, 2);
+            assertEq(data.c, 3);
+        }
 }

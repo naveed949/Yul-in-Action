@@ -196,6 +196,24 @@ contract StorageOps {
         }
     }
 
+    /**
+     * @dev Function to read the value of structMap at a given key from storage.
+     * @param key The key of the value to read from structMap.
+     * @return value The Data struct of structMap at the given key.
+     */
+    function readStructMap(uint256 key) public view returns (Data memory value) {
+        uint256 slot;
+        assembly {
+            // fetch the slot of structMap
+             slot := structMap.slot  
+        }
+        // hash the slot and key to get the location of structMap[key] in storage
+        bytes32 location = keccak256(abi.encode(key, slot));
+        assembly {
+            // load value of structMap[key] into memory
+             value := sload(location)
+        }
+    }
 
 
 }
@@ -210,4 +228,5 @@ contract StorageOps {
  *  - The location of dynamic array's values storage is calculated by `keccak256(abi.encode(array.slot))`
  * - The values of dynamic array are stored at `add(location, index) = value`
  * - The values of mapping are stored at `keccak256(abi.encode(key, slot)) = value`
+ * - The values of nested mapping are stored at hash of hash i.e: `keccak256(abi.encode(innerKey, keccak256(abi.encode(key, slot)))) = value`
  */
