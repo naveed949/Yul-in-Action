@@ -10,8 +10,8 @@ contract StorageOps {
     uint256 public num = 11; // public variable to store a uint256 value
     uint256[3] public fixedArray; // public fixed array to store 3 uint256 values
     uint256[] public dynamicArray; // public dynamic array to store an arbitrary number of uint256 values
-    mapping (address => uint) normalMap; // public mapping to store uint values for each address
-    mapping (address => mapping (uint256 => uint64)) public complexMap; // public mapping to store uint64 values for each address and uint256 key
+    mapping (address => uint256) normalMap; // public mapping to store uint values for each address
+    mapping (address => mapping (uint256 => uint64)) public nestedMap; // public mapping to store uint64 values for each address and uint256 key
     mapping(uint256 => Data) public structMap; // public mapping to store Data struct values for each uint256 key
 
     /**
@@ -32,8 +32,8 @@ contract StorageOps {
         fixedArray[2] = 3; // set the third value of fixedArray to 3
         dynamicArray = [10, 20, 30]; // set the values of dynamicArray to [10, 20, 30]
         normalMap[address(1)] = 1; // set the value of normalMap[address(1)] to 1
-        complexMap[address(2)][1] = 2; // set the value of complexMap[address(2)][1] to 2
-        complexMap[address(3)][2] = 3; // set the value of complexMap[address(3)][2] to 3
+        nestedMap[address(2)][1] = 2; // set the value of nestedMap[address(2)][1] to 2
+        nestedMap[address(3)][2] = 3; // set the value of nestedMap[address(3)][2] to 3
         structMap[1] = Data(1, 2, 3); // set the value of structMap[1] to Data(1, 2, 3)
     }
     
@@ -117,6 +117,87 @@ contract StorageOps {
         }
     }
 
+    /**
+     * @dev Function to write the value of _normalMap at a given key to normalMap in storage.
+     * @param key The key of the value to write to normalMap.
+     * @param value The value to write to normalMap.
+     */
+    function writeNormalMap(address key, uint256 value) public {
+        uint256 slot;
+        assembly {
+            // fetch the slot of normalMap
+             slot := normalMap.slot  
+        }
+        // hash the slot and key to get the location of normalMap[key] in storage
+        bytes32 location = keccak256(abi.encode(key, slot));
+        assembly {
+            // store value in normalMap[key]
+            sstore(location, value)
+        }
+    }
+
+    /**
+     * @dev Function to read the value of normalMap at a given key from storage.
+     * @param key The key of the value to read from normalMap.
+     * @return value The value of normalMap at the given key.
+     */
+    function readNormalMap(address key) public view returns (uint256 value) {
+        uint256 slot;
+        assembly {
+            // fetch the slot of normalMap
+             slot := normalMap.slot  
+        }
+        // hash the slot and key to get the location of normalMap[key] in storage
+        bytes32 location = keccak256(abi.encode(key, slot));
+        assembly {
+            // load value of normalMap[key] into memory
+             value := sload(location)
+        }
+    }
+
+    /**
+     * @dev Function to write the value of nestedMap at a given key and index to nestedMap in storage.
+     * @param key The key of the value to write to nestedMap.
+     * @param innerKey The inner key of the value to write to nestedMap.
+     * @param value The value to write to nestedMap.
+     */
+    function writeNestedMap(address key, uint256 innerKey, uint256 value) public {
+        uint256 slot;
+        assembly {
+            // fetch the slot of nestedMap
+             slot := nestedMap.slot  
+        }
+        // hash the slot and key to get outerHash then hash it with innerKey to get the location of nestedMap[key][innerKey] in storage
+        bytes32 location = keccak256(abi.encode(innerKey, keccak256(abi.encode(key, slot))));
+        assembly {
+            // store value in nestedMap[key][innerKey]
+            sstore(location, value)
+        }
+
+    }
+
+    /**
+     * @dev Function to read the value of nestedMap at a given key and index from storage.
+     * @param key The key of the value to read from nestedMap.
+     * @param innerKey The inner key of the value to read from nestedMap.
+     * @return value The value of nestedMap at the given key and index.
+     */
+    function readNestedMap(address key, uint256 innerKey) public view returns (uint256 value) {
+        uint256 slot;
+        assembly {
+            // fetch the slot of nestedMap
+             slot := nestedMap.slot  
+        }
+        // hash the slot and key to get outerHash then hash it with innerKey to get the location of nestedMap[key][innerKey] in storage
+        bytes32 location = keccak256(abi.encode(innerKey, keccak256(abi.encode(key, slot))));
+        assembly {
+            // load value of nestedMap[key][innerKey] into memory
+             value := sload(location)
+        }
+    }
+
+
+
 }
 
 // Path: src/StorageOps.sol
@@ -128,4 +209,5 @@ contract StorageOps {
  * - The values of dynamic array are stored at different location. (due to dynamic nature of array and to avoid possibilited of overwriting the values of other storage variables came after this dynamic array)
  *  - The location of dynamic array's values storage is calculated by `keccak256(abi.encode(array.slot))`
  * - The values of dynamic array are stored at `add(location, index) = value`
+ * - The values of mapping are stored at `keccak256(abi.encode(key, slot)) = value`
  */

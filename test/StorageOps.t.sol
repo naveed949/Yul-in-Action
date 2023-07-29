@@ -36,4 +36,24 @@ contract StorageOpsTest  is Test {
             assertEq(store.readDynamicArray(2), 33);
             assertEq(store.readDynamicArray(3), 44);
         }
+
+        function testReadNormalMap() public {
+            uint256 value = store.readNormalMap(address(1));
+            assertEq(value, 1);
+        }
+
+        function testWriteNormalMap() public {
+            store.writeNormalMap(address(2), 11);
+            assertEq(store.readNormalMap(address(2)), 11);
+        }
+
+        function testReadNestedMap() public {
+            uint256 value = store.readNestedMap(address(2), 1);
+            assertEq(value, 2);
+        }
+
+        function testWriteNestedMap() public {
+            store.writeNestedMap(address(3), 2, 22);
+            assertEq(store.readNestedMap(address(3), 2), 22);
+        }
 }
