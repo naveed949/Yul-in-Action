@@ -239,4 +239,70 @@ contract Memory {
         // packed dynamic array in storage when loaded in memory is unpacked (i.e: each element is stored in a separate slot of 32 bytes regardless of the type of the array)
         uint8[] memory bar = foo; 
     }
+/**
+     * @dev Returns the values 2 and 4.
+     * Demonstrates how to return multiple values from a Solidity function using assembly.
+     * @return The values 2 and 4.
+     */
+    function return2and4() external pure returns (uint256, uint256) {
+        assembly {
+            mstore(0x00, 2)
+            mstore(0x20, 4)
+            return(0x00, 0x40) // returns bytes from memory at address 0x00 and upto length of 0x40 (64 bytes)
+        }
+    }
+
+    /**
+     * @dev Requires that the caller of the function is a specific address.
+     * Demonstrates how to use the `require()` function in Solidity.
+     */
+    function requireV1() external view {
+        require(msg.sender == 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2); // consumes 197 gas
+    }
+
+    /**
+     * @dev Requires that the caller of the function is a specific address.
+     * Demonstrates how to use assembly to implement the same functionality as `requireV1()`.
+     */
+    function requireV2() external view { // consumes 185 gas
+        assembly {
+            if iszero(
+                eq(caller(), 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2)
+            ) {
+                revert(0, 0) // saves 197 - 185 = 12 gas by reverting with no error message
+            }
+        }
+    }
+
+    /**
+     * @dev Computes the keccak256 hash of the values 1, 2, and 3.
+     * Demonstrates how to use the `keccak256()` function in Solidity.
+     * @return The keccak256 hash of the values 1, 2, and 3.
+     */
+    function hashV1() external pure returns (bytes32) { // consumes 1316 gas
+        bytes memory toBeHashed = abi.encode(1, 2, 3);
+        return keccak256(toBeHashed);
+    }
+
+    /**
+     * @dev Computes the keccak256 hash of the values 1, 2, and 3.
+     * Demonstrates how to use assembly to implement the same functionality as `hashV1()`.
+     * @return The keccak256 hash of the values 1, 2, and 3.
+     */
+    function hashV2() external pure returns (bytes32) { // 342 gas only
+        assembly {
+            let freeMemoryPointer := mload(0x40)
+
+            // store 1, 2, 3 in memory
+            mstore(freeMemoryPointer, 1)
+            mstore(add(freeMemoryPointer, 0x20), 2)
+            mstore(add(freeMemoryPointer, 0x40), 3)
+
+            // update memory pointer
+            mstore(0x40, add(freeMemoryPointer, 0x60)) // increase memory pointer by 96 bytes
+
+            mstore(0x00, keccak256(freeMemoryPointer, 0x60))
+            return(0x00, 0x60)
+        }
+    }
 }
