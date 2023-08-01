@@ -34,7 +34,12 @@ contract Memory {
      * @param valueAtIndex0 The value at index 0 of the array.
      * @param valueAtIndex1 The value at index 1 of the array.
      */
-    event Debug(bytes32 location, bytes32 len, bytes32 valueAtIndex0, bytes32 valueAtIndex1);
+    event Debug(
+        bytes32 location,
+        bytes32 len,
+        bytes32 valueAtIndex0,
+        bytes32 valueAtIndex1
+    );
 
     /**
      * @dev Demonstrates how to access high memory in Solidity.
@@ -216,11 +221,9 @@ contract Memory {
      * Sets the memory pointer to `0x80` and then creates a new `uint256[1]` array with a value of `6`.
      * Returns the value at index 0 of `foo`.
      */
-    function breakFreeMemoryPointer(uint256[1] memory foo)
-        external
-        view
-        returns (uint256)
-    {
+    function breakFreeMemoryPointer(
+        uint256[1] memory foo
+    ) external view returns (uint256) {
         assembly {
             // set the current memory pointer to 0x80 explicitly
             mstore(0x40, 0x80)
@@ -237,9 +240,10 @@ contract Memory {
 
     function unpacked() external {
         // packed dynamic array in storage when loaded in memory is unpacked (i.e: each element is stored in a separate slot of 32 bytes regardless of the type of the array)
-        uint8[] memory bar = foo; 
+        uint8[] memory bar = foo;
     }
-/**
+
+    /**
      * @dev Returns the values 2 and 4.
      * Demonstrates how to return multiple values from a Solidity function using assembly.
      * @return The values 2 and 4.
@@ -264,7 +268,8 @@ contract Memory {
      * @dev Requires that the caller of the function is a specific address.
      * Demonstrates how to use assembly to implement the same functionality as `requireV1()`.
      */
-    function requireV2() external view { // consumes 185 gas
+    function requireV2() external view {
+        // consumes 185 gas
         assembly {
             if iszero(
                 eq(caller(), 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2)
@@ -279,7 +284,8 @@ contract Memory {
      * Demonstrates how to use the `keccak256()` function in Solidity.
      * @return The keccak256 hash of the values 1, 2, and 3.
      */
-    function hashV1() external pure returns (bytes32) { // consumes 1316 gas
+    function hashV1() external pure returns (bytes32) {
+        // consumes 1316 gas
         bytes memory toBeHashed = abi.encode(1, 2, 3);
         return keccak256(toBeHashed);
     }
@@ -289,7 +295,8 @@ contract Memory {
      * Demonstrates how to use assembly to implement the same functionality as `hashV1()`.
      * @return The keccak256 hash of the values 1, 2, and 3.
      */
-    function hashV2() external pure returns (bytes32) { // 342 gas only
+    function hashV2() external pure returns (bytes32) {
+        // 342 gas only
         assembly {
             let freeMemoryPointer := mload(0x40)
 
@@ -305,4 +312,68 @@ contract Memory {
             return(0x00, 0x60)
         }
     }
+
+    // LOGS IN YUL
+   /**
+     * @dev Emits a `SomeLog` event with the values 5 and 6.
+     * Demonstrates how to emit an event in Solidity.
+     */
+    function emitLog() external {
+        emit SomeLog(5, 6);
+    }
+
+    /**
+     * @dev Emits a `SomeLog` event with the values 5 and 6 using Yul assembly.
+     * Demonstrates how to emit an event using Yul assembly in Solidity.
+     */
+    function yulEmitLog() external {
+        assembly {
+            // event's signature i.e: keccak256("SomeLog(uint256,uint256)")
+            let signature := 0xc200138117cf199dd335a2c6079a6e1be01e6592b6a76d4b5fc31b169df819cc
+            log3(0, 0, signature, 5, 6)
+        }
+    }
+
+    /**
+     * @dev Emits a `SomeLogV2` event with the values 5 and true.
+     * Demonstrates how to emit an event with a boolean value in Solidity.
+     */
+    function v2EmitLog() external {
+        emit SomeLogV2(5, true);
+    }
+
+    /**
+     * @dev Emits a `SomeLogV2` event with the values 5 and true using Yul assembly.
+     * Demonstrates how to emit an event with a boolean value using Yul assembly in Solidity.
+     */
+    function v2YulEmitLog() external {
+        assembly {
+            // keccak256("SomeLogV2(uint256,bool)")
+            let signature := 0x113cea0e4d6903d772af04edb841b17a164bff0f0d88609aedd1c4ac9b0c15c2
+            mstore(0x00, 1)
+            log2(0, 0x20, signature, 5)
+        }
+    }
+
+    /**
+     * @dev Self-destructs the contract and sends its balance to the caller.
+     * Demonstrates how to self-destruct a contract in Solidity.
+     */
+    function boom() external {
+        assembly {
+            selfdestruct(caller())
+        }
+    }
+
+    /**
+     * @dev The `SomeLog` event is emitted when `emitLog()` is called.
+     * It has two indexed parameters, `a` and `b`, both of which are of type `uint256`.
+     */
+    event SomeLog(uint256 indexed a, uint256 indexed b);
+
+    /**
+     * @dev The `SomeLogV2` event is emitted when `v2EmitLog()` is called.
+     * It has one indexed parameter, `a`, which is of type `uint256`, and one non-indexed parameter, `b`, which is of type `bool`.
+     */
+    event SomeLogV2(uint256 indexed a, bool b);
 }
